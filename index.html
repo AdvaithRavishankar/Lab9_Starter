@@ -102,6 +102,113 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    // Custom error class
+    class CustomError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = 'CustomError';
+      }
+    }
+
+    // Global error handler
+    window.onerror = function (message, source, lineno, colno, error) {
+      console.error('Global error caught:', message, 'at', source, 'line:', lineno, 'col:', colno, 'error:', error);
+      // Send the error details to the server or TrackJS
+      fetch('/log-error', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          source,
+          lineno,
+          colno,
+          error,
+        }),
+      });
+      return true; // Prevent the browser from displaying the error
+    };
+
+    // Adding event listeners to buttons
+    window.addEventListener('DOMContentLoaded', () => {
+      const buttons = document.querySelectorAll('#error-btns > button');
+
+      buttons[0].addEventListener('click', function() {
+        console.log('This is a console log message');
+      });
+
+      buttons[1].addEventListener('click', function() {
+        console.error('This is a console error message');
+      });
+
+      buttons[2].addEventListener('click', function() {
+        console.count('Counter');
+      });
+
+      buttons[3].addEventListener('click', function() {
+        console.warn('This is a console warn message');
+      });
+
+      buttons[4].addEventListener('click', function() {
+        console.assert(false, 'Assertion failed: This condition is false');
+      });
+
+      buttons[5].addEventListener('click', function() {
+        console.clear();
+      });
+
+      buttons[6].addEventListener('click', function() {
+        console.dir(document.body);
+      });
+
+      buttons[7].addEventListener('click', function() {
+        console.dirxml(document);
+      });
+
+      buttons[8].addEventListener('click', function() {
+        console.group('Group Example');
+        console.log('Inside the group');
+      });
+
+      buttons[9].addEventListener('click', function() {
+        console.groupEnd();
+      });
+
+      buttons[10].addEventListener('click', function() {
+        console.table([{name: "John", age: 30}, {name: "Jane", age: 25}]);
+      });
+
+      buttons[11].addEventListener('click', function() {
+        console.time('Timer');
+      });
+
+      buttons[12].addEventListener('click', function() {
+        console.timeEnd('Timer');
+      });
+
+      buttons[13].addEventListener('click', function() {
+        console.trace('Trace Example');
+      });
+
+      buttons[14].addEventListener('click', function() {
+        try {
+          throw new Error('Global Error Triggered');
+        } catch (error) {
+          console.error('Caught an error:', error);
+        } finally {
+          console.log('Error handling complete.');
+        }
+      });
+    });
+
+    // Example usage of custom error
+    try {
+      throw new CustomError('This is a custom error');
+    } catch (error) {
+      console.error('Caught a custom error:', error);
+    }
   </script>
 </body>
 
