@@ -87,7 +87,15 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+
+    window.TrackJS && TrackJS.install({ 
+      token: "edfd159ee8274449987186bd330cd099",
+      application: "lab9"
+    });
+
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
