@@ -132,9 +132,7 @@
     });
 
     errorBtns[2].addEventListener('click', () => {
-      for (let i = 0; i < 10; i++) {
         console.count('Count');
-      }
     });
 
     errorBtns[3].addEventListener('click', () => {
@@ -202,7 +200,7 @@
     }
     // Example usage of custom error
     try {
-      throw new CustomError('This is a custom error');
+      throw new CustomError('This is a custom error demo');
     } catch (error) {
       console.error('Caught a custom error:', error);
     }
